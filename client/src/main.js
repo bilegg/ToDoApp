@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Axios from 'axios'
 
 Vue.config.productionTip = false
 
@@ -11,5 +12,15 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data: {
+    results: []
+  },
+  mounted () {
+    Axios.get('http://localhost:8081/getData')
+      .then(response => {
+        console.log(response.data)
+        this.results = response.data
+      })
+  }
 })

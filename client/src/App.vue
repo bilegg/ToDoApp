@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!-- <img src="./assets/logo.png"> -->
     <router-view/>
   </div>
 </template>
@@ -19,5 +19,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+html {
+    height: 100%;
+   background: rgb(173,179,195);
+    background: linear-gradient(90deg, rgba(173,179,195,1) 0%, rgba(255,255,255,1) 37%);
 }
 </style>
