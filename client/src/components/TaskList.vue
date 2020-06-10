@@ -1,37 +1,51 @@
 <template>
   <div>
-      <h1>Your task list</h1>
-      <router-link style="text-decoration:none" to="AddTask">
-        <button class="but">
-          Add new task
-        </button>
-      </router-link>
-      <br><br>
-      <div class="row" v-for="(result, index) in results" :key="index">
-        <div class='title'>
-          {{ result.title }}
-          <router-link style="text-decoration:none" to="DeleteTask">
-            <button @click="deleteTask(result.id)">
-              Delete this task
-            </button>
-          </router-link>
-        </div>
-        <div class='description'>
-          {{ result.description }}
-        </div>
-        <br><br>
+    <header style="background-color:#3385ff; height: 100px; position: relative; box-shadow: 0px 10px 5px #27272780;
+    -webkit-box-shadow: 0px 10px 5px #27272780;-moz-box-shadow: 0px 10px 5px #27272780;">
+    <h2 style="margin:0; position: absolute; top:50%; left:50%; margin-right: -50%; transform: translate(-50%, -50%); font-size:40px">
+    Your task list</h2>
+    </header>
+    <router-link style="text-decoration:none; margin:0" to="AddTask">
+      <button class="addBut">
+        ADD TASK
+      </button>
+    </router-link>
+    <br><br>
+    <div class="row" v-for="(result, index) in results" :key="index">
+      <div class='title'>
+        {{ result.title }}
       </div>
+      <div class='description'>
+        {{ result.description }}
+      </div>
+      <router-link style="text-decoration:none" to="DeleteTask">
+            <button  @click="deleteTask(result.id)" class="deleteBut">Delete</button>
+        </router-link>
+      <br><hr><br>
+    </div>
   </div>
 </template>
 
 <script>
+import {
+  mdiAccount,
+  mdiPencil,
+  mdiShareVariant,
+  mdiDelete
+} from '@mdi/js'
 import Axios from 'axios'
 import TaskHandler from '@/services/TaskHandler'
 
 export default {
   data () {
     return {
-      results: ''
+      results: '',
+      icons: {
+        mdiAccount,
+        mdiPencil,
+        mdiShareVariant,
+        mdiDelete
+      }
     }
   },
   mounted () {
@@ -54,6 +68,49 @@ export default {
 </script>
 
 <style scoped>
+.row{
+  text-align: left;
+  width:40%;
+  margin-left: 30%;
+  position: relative;
+}
+.description{
+  width: 70%;
+  word-wrap: break-word;
+}
+.title{
+  width: 75%;
+  word-wrap: break-word;
+}
+.addBut{
+  background-color: #3385ff;
+  position: absolute;
+  right:2%;
+  top:0%;
+  margin: 0;
+  height: 100px;
+  border: none;
+  color: #FFFFFF;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+.deleteBut{
+  position: absolute;
+  top: 0;
+  right:0;
+  background-color: #555555;
+  border: none;
+  color: #FFFFFF;
+  padding: 15px 32px;
+  text-align: center;
+  margin: 16px 0 !important;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
 .but{
   position: absolute;
   top:8%;

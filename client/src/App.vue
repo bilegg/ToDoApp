@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
   </div>
@@ -12,17 +13,23 @@ export default {
 </script>
 
 <style>
+*{
+  font-family: 'Montserrat', sans-serif;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+body {
+  padding: 0;
+  margin: 0;
 }
 html {
     height: 100%;
-   background: rgb(173,179,195);
-    background: linear-gradient(90deg, rgba(173,179,195,1) 0%, rgba(255,255,255,1) 37%);
+    /*background: rgb(173,179,195);
+    background: linear-gradient(90deg, rgba(173,179,195,1) 0%, rgba(255,255,255,1) 37%);*/
 }
 </style>
