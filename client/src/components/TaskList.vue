@@ -1,66 +1,56 @@
 <template>
   <div>
-    <header style="background-color:#3385ff; height: 100px; position: relative; box-shadow: 0px 10px 5px #27272780;
-    -webkit-box-shadow: 0px 10px 5px #27272780;-moz-box-shadow: 0px 10px 5px #27272780;">
-    <h2 style="margin:0; position: absolute; top:50%; left:50%; margin-right: -50%; transform: translate(-50%, -50%); font-size:40px">
-    Your task list</h2>
+    <div class="topBar">
+    </div>
+    <header>
+      <h2>
+      Your task list
+      </h2>
     </header>
     <router-link style="text-decoration:none; margin:0" to="AddTask">
       <button class="addBut">
-        ADD TASK
+        <svg class="bi bi-plus" width="100px" height="100px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+          <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+        </svg>
       </button>
     </router-link>
     <br><br>
-    <div class="row" v-for="(result, index) in results" :key="index">
+    <div class="row" v-for="(task, index) in allTasks" :key="index">
       <div class='title'>
-        {{ result.title }}
+        {{ task.title }}
       </div>
       <div class='description'>
-        {{ result.description }}
+        {{ task.description }}
       </div>
-      <router-link style="text-decoration:none" to="DeleteTask">
-            <button  @click="deleteTask(result.id)" class="deleteBut">Delete</button>
-        </router-link>
+      <button  @click="deleteTask(task.id)" class="deleteBut">Delete</button>
       <br><hr><br>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  mdiAccount,
-  mdiPencil,
-  mdiShareVariant,
-  mdiDelete
-} from '@mdi/js'
 import Axios from 'axios'
 import TaskHandler from '@/services/TaskHandler'
 
 export default {
   data () {
     return {
-      results: '',
-      icons: {
-        mdiAccount,
-        mdiPencil,
-        mdiShareVariant,
-        mdiDelete
-      }
+      allTasks: ''
     }
   },
   mounted () {
     Axios.get('http://localhost:8081/getData')
       .then(response => {
-        console.log(response.data)
-        this.results = response.data
+        this.allTasks = response.data
       })
   },
   methods: {
     async deleteTask (i) {
-      console.log(i)
       const response = await TaskHandler.deleteTask({
         id: i
       })
+
       console.log(response.data)
     }
   }
@@ -68,35 +58,64 @@ export default {
 </script>
 
 <style scoped>
+header{
+  background-color: #03A9F4;
+  height: 100px;
+  position: relative;
+  box-shadow: 0px 10px 5px #27272780;
+  -webkit-box-shadow: 0px 10px 5px #27272780;
+  -moz-box-shadow: 0px 10px 5px #27272780;
+}
+
+header > h2{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  font-family: 'MuseoModerno', cursive;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+}
+
+.topBar{
+  background-color: #0288D1;
+  width: 100%;
+  height: 20px;
+}
+
 .row{
   text-align: left;
   width:40%;
   margin-left: 30%;
   position: relative;
 }
+
 .description{
   width: 70%;
   word-wrap: break-word;
 }
+
 .title{
   width: 75%;
   word-wrap: break-word;
 }
+
 .addBut{
-  background-color: #3385ff;
+  background-color: #03A9F4;
   position: absolute;
-  right:2%;
-  top:0%;
+  right: 4%;
+  top: 20px;
   margin: 0;
   height: 100px;
   border: none;
-  color: #FFFFFF;
-  padding: 15px 32px;
-  text-align: center;
+  outline: none;
+  color: none;
   text-decoration: none;
-  font-size: 25px;
   cursor: pointer;
+  text-align: center;
 }
+
 .deleteBut{
   position: absolute;
   top: 0;
@@ -111,6 +130,7 @@ export default {
   font-size: 16px;
   cursor: pointer;
 }
+
 .but{
   position: absolute;
   top:8%;
@@ -122,14 +142,17 @@ export default {
   text-decoration: none;
   font-size: 16px;
 }
+
 .but:hover{
   border: 3px solid rgb(156, 152, 152);
   font-size: 18px;
 }
+
 h1{
   font-size:50px;
   margin-bottom: 0;
 }
+
 .title{
   font-size: 40px;
 }

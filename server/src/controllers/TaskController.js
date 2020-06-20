@@ -27,9 +27,9 @@ module.exports = {
             console.log(req.body.id)
             Task.destroy({
                 where: {
-                  id: req.body.id
+                    id: req.body.id
                 }
-              });
+            });
         } catch (err) {
             res.status(400).send({
                 error: 'Unexpected error had occured'

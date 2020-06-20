@@ -11,17 +11,25 @@ export default new Router({
     {
       path: '/',
       name: 'TaskList',
-      component: TaskList
+      component: TaskList,
+      meta: {
+        title: 'Home Page - To Do App',
+        metaTags: [
+          {
+            name: 'description',
+            content: 'The home page of my to-do app.'
+          },
+          {
+            property: 'og:description',
+            content: 'The home page of my to-do app.'
+          }
+        ]
+      }
     },
     {
       path: '/AddTask',
       name: 'AddTask',
       component: AddTask
-    },
-    {
-      path: '/DeleteTask',
-      name: 'DeleteTask',
-      component: DeleteTask
     }
   ]
 })

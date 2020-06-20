@@ -33,7 +33,7 @@ Node.js is mostly single-threaded but for background tasks uses a thread pool to
 
 What is your favourite HTTP framework and why?
 
-There are a few but I think the most interesting are Ajax frameworks like jQuery because the are powerful, easy to get 
+There are a few but I think the most interesting are Ajax frameworks like jQuery because the are very useful, easy to get 
 into and fun to write code in.
 
 What is difference between JavaScript and Node.js?
