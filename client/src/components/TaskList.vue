@@ -7,6 +7,7 @@
       Your task list
       </h2>
     </header>
+    <SuccessPopUp id="SuccessPopUp" text="Task deleted"></SuccessPopUp>
     <router-link style="text-decoration:none; margin:0" to="AddTask">
       <button class="addBut">
         <svg class="bi bi-plus" width="100px" height="100px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -43,18 +44,23 @@ export default {
     Axios.get('http://localhost:8081/getData')
       .then(response => {
         this.allTasks = response.data
-        
       })
   },
   methods: {
     async deleteTask (i) {
       document.getElementById(i).remove() // Delete task from page
 
+      document.getElementById('SuccessPopUp').style.display = 'block' // Show popup
+
+      setTimeout(
+        function () {
+          document.getElementById('SuccessPopUp').style.display = 'none'
+        }, 2000) // Hide popup
+
       const response = await TaskHandler.deleteTask({ // Delete entry
         id: i
       })
       console.log(response)
-
     }
   }
 }
