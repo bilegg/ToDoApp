@@ -23,7 +23,7 @@
       <div class='description'>
         {{ task.description }}
       </div>
-      <button  @click="deleteTask(task.id)" class="deleteBut">Delete</button>
+      <button  @click="deleteTask(task.id)" class="deleteBut">DELETE</button>
       <br><hr><br>
     </div>
   </div>
@@ -129,6 +129,7 @@ header > h2{
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 .but{

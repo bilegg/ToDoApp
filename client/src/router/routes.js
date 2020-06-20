@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AddTask from '@/components/AddTask'
 import TaskList from '@/components/TaskList'
-import DeleteTask from '@/components/DeleteTask'
 
 Vue.use(Router)
 
