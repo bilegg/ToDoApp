@@ -43,6 +43,7 @@ export default {
     Axios.get('http://localhost:8081/getData')
       .then(response => {
         this.allTasks = response.data
+        
       })
   },
   methods: {
@@ -53,7 +54,7 @@ export default {
         id: i
       })
       console.log(response)
-      
+
     }
   }
 }
