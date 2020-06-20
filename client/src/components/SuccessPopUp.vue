@@ -88,9 +88,9 @@ export default {
   height: 80px;
   background-color: #4CAF50;
   border-radius: 5px;
-  animation: fadeIn ease 3s;
-  -webkit-animation: fadeIn ease 3s;
-  -moz-animation: fadeIn ease 3s;
+  animation: fadeIn ease 2s;
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
   display: none;
 }
 

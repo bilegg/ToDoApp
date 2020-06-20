@@ -16,8 +16,8 @@
       </button>
     </router-link>
     <br><br>
-    <div class="row" v-for="(task, index) in allTasks" :key="index">
-      <div class='title'>
+    <div class="row" v-for="(task, index) in allTasks" :key="index" v-bind:id="task.id">
+      <div class='title' >
         {{ task.title }}
       </div>
       <div class='description'>
@@ -47,11 +47,12 @@ export default {
   },
   methods: {
     async deleteTask (i) {
-      const response = await TaskHandler.deleteTask({
+      document.getElementById(i).remove() // Delete task from page
+
+      const response = await TaskHandler.deleteTask({ // Delete entry
         id: i
       })
-
-      console.log(response.data)
+      console.log(response)
     }
   }
 }

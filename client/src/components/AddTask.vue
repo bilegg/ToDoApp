@@ -21,7 +21,7 @@
     <br><br>
     <textarea name="description" v-model="description" rows="4" cols="50" placeholder="Task description..." maxlength = "100"></textarea>
     <br><br>
-    <button @click="addTask" class="addBut">ADD</button>
+    <button @click="addTask" class="addButton">ADD</button>
   </div>
 </template>
 
@@ -39,17 +39,23 @@ export default {
       switch (document.getElementsByName('title')[0].value) {
         case '': // If title is empty
           document.getElementById('WarningPopUp').style.display = 'block' // Show popup
+          document.getElementsByClassName('addButton')[0].disabled = true // Disable button
+
           setTimeout(
             function () {
               document.getElementById('WarningPopUp').style.display = 'none'
-            }, 3000) // Hide popup
+              document.getElementsByClassName('addButton')[0].disabled = false
+            }, 2000) // Hide popup
           break
         default: // Else
           document.getElementById('SuccessPopUp').style.display = 'block' // Show popup
+          document.getElementsByClassName('addButton')[0].disabled = true // Enable button
+
           setTimeout(
             function () {
               document.getElementById('SuccessPopUp').style.display = 'none'
-            }, 3000) // Hide popup
+              document.getElementsByClassName('addButton')[0].disabled = false
+            }, 2000) // Hide popup
 
           document.getElementsByName('title')[0].value = '' // Clear form
           document.getElementsByName('description')[0].value = ''
@@ -253,7 +259,7 @@ textarea{
   font-size: 25px;
 }
 
-.addBut{
+.addButton{
   background-color: #555555;
   border: none;
   color: #FFFFFF;
