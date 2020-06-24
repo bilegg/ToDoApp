@@ -10,7 +10,7 @@ to debug the code
 
 What tools can be used to assure consistent style?
 
-There are many tools that help maintain clean, consistent style e.g ESLint or JSLint
+There are many tools that help maintain clean, consistent style e.g ESLint or JSLint d
 
 What is REPL? What purpose it is used for?
 
