@@ -1,32 +1,34 @@
 <template>
   <div>
-    <div class="topBar">
+    <div class='topBar'>
     </div>
     <header>
       <h2>
       Add task
       </h2>
     </header>
-    <a style="text-decoration:none" href="http://localhost:8080">
-      <button class="backButton">
-        <svg class="bi bi-arrow-left" width="100px" height="100px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
-          <path fill-rule="evenodd" d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    <a style='text-decoration:none' href='http://localhost:8080'>
+      <button class='backButton'>
+        <svg class='bi bi-arrow-left' width='100px' height='100px' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+          <path fill-rule='evenodd' d='M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z'/>
+          <path fill-rule='evenodd' d='M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/>
         </svg>
       </button>
     </a>
-    <SuccessPopUp id="SuccessPopUp" text="Task added"></SuccessPopUp>
-    <WarningPopUp id="WarningPopUp" text="Empty title"></WarningPopUp>
-    <input type="text" v-model="title" name="title" placeholder="Task title...">
+    <SuccessPopUp id='SuccessPopUp' text='Task added'></SuccessPopUp>
+    <WarningPopUp id='WarningPopUp' text='Empty title'></WarningPopUp>
+    <input type='text' v-model='title' name='title' placeholder='Task title...'>
     <br><br>
-    <textarea name="description" v-model="description" rows="4" cols="50" placeholder="Task description..." maxlength = "100"></textarea>
+    <textarea name='description' v-model='description' rows='4' cols='50' placeholder='Task description...' maxlength = '100'></textarea>
     <br><br>
-    <button @click="addTask" class="addButton">ADD</button>
+    <button @click='addTask' class='addButton'>ADD</button>
   </div>
 </template>
 
 <script>
 import TaskHandler from '@/services/TaskHandler'
+import swal from 'sweetalert'
+
 export default {
   data () {
     return {
@@ -38,33 +40,33 @@ export default {
     async addTask () {
       switch (document.getElementsByName('title')[0].value) {
         case '': // If title is empty
-          document.getElementById('WarningPopUp').style.display = 'block' // Show popup
-          document.getElementsByClassName('addButton')[0].disabled = true // Disable button
-
-          setTimeout(
-            function () {
-              document.getElementById('WarningPopUp').style.display = 'none'
-              document.getElementsByClassName('addButton')[0].disabled = false
-            }, 2000) // Hide popup
+          swal({ // Warning pop up
+            title: 'Cannot add new record',
+            text: 'The title is empty',
+            icon: 'warning'
+          })
           break
         default: // Else
-          document.getElementById('SuccessPopUp').style.display = 'block' // Show popup
-          document.getElementsByClassName('addButton')[0].disabled = true // Enable button
+          try {
+            const response = await TaskHandler.addTask({ // Send request to write data
+              title: this.title,
+              description: this.description
+            })
+            console.log(response)
 
-          setTimeout(
-            function () {
-              document.getElementById('SuccessPopUp').style.display = 'none'
-              document.getElementsByClassName('addButton')[0].disabled = false
-            }, 2000) // Hide popup
+            document.getElementsByName('title')[0].value = '' // Clear form
+            document.getElementsByName('description')[0].value = ''
 
-          document.getElementsByName('title')[0].value = '' // Clear form
-          document.getElementsByName('description')[0].value = ''
+            swal('Task has been added!', { // Confirm pop up
+              icon: 'success'
+            })
+          } catch (e) {
+            console.error(e)
 
-          const response = await TaskHandler.addTask({ // Send request to write data
-            title: this.title,
-            description: this.description
-          })
-          console.log(response)
+            swal('Unexpected error has occured', { // Error pop up
+              icon: 'error'
+            })
+          }
           break
       }
     }
@@ -275,4 +277,4 @@ textarea{
 }
 
 </style>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add 'scoped' attribute to limit CSS to this component only -->

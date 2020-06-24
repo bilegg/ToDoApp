@@ -5,30 +5,29 @@ import TaskList from '@/components/TaskList'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'TaskList',
       component: TaskList,
-      meta: {
-        title: 'Home Page - To Do App',
-        metaTags: [
-          {
-            name: 'description',
-            content: 'The home page of my to-do app.'
-          },
-          {
-            property: 'og:description',
-            content: 'The home page of my to-do app.'
-          }
-        ]
-      }
+      meta: { title: 'Home Page - To Do App' }
     },
     {
       path: '/AddTask',
       name: 'AddTask',
-      component: AddTask
+      component: AddTask,
+      meta: { title: 'Add Task' }
     }
   ]
 })
+
+const DEFAULT_TITLE = 'To Do App'
+router.afterEach((to, from) => {
+  // Use next tick to handle router history correctly
+  Vue.nextTick(() => {
+    document.title = to.meta.title || DEFAULT_TITLE
+  })
+})
+
+export default router

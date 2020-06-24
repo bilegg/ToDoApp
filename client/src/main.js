@@ -3,14 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router/routes'
-import SuccessPopUp from './components/SuccessPopUp'
-import WarningPopUp from './components/WarningPopUp'
 
 Vue.config.productionTip = false
-
-Vue.component('SuccessPopUp', SuccessPopUp)
-
-Vue.component('WarningPopUp', WarningPopUp)
 
 /* eslint-disable no-new */
 new Vue({

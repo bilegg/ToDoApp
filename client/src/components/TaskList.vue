@@ -7,9 +7,8 @@
       Your task list
       </h2>
     </header>
-    <SuccessPopUp id="SuccessPopUp" text="Task deleted"></SuccessPopUp>
     <router-link style="text-decoration:none; margin:0" to="AddTask">
-      <button class="addBut">
+      <button class="addButton">
         <svg class="bi bi-plus" width="100px" height="100px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
           <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
@@ -24,7 +23,12 @@
       <div class='description'>
         {{ task.description }}
       </div>
-      <button  @click="deleteTask(task.id)" class="deleteBut">DELETE</button>
+      <button  @click="deleteTask(task.id)" class="deleteButton">
+        <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+        </svg>
+        </button>
       <br><hr><br>
     </div>
   </div>
@@ -33,6 +37,7 @@
 <script>
 import Axios from 'axios'
 import TaskHandler from '@/services/TaskHandler'
+import swal from 'sweetalert'
 
 export default {
   data () {
@@ -48,19 +53,35 @@ export default {
   },
   methods: {
     async deleteTask (i) {
-      document.getElementById(i).remove() // Delete task from page
-
-      document.getElementById('SuccessPopUp').style.display = 'block' // Show popup
-
-      setTimeout(
-        function () {
-          document.getElementById('SuccessPopUp').style.display = 'none'
-        }, 2000) // Hide popup
-
-      const response = await TaskHandler.deleteTask({ // Delete entry
-        id: i
+      swal({
+        text: 'Are you sure?',
+        icon: 'warning',
+        buttons: ['Not really', 'Yes I am!'],
+        dangerMode: true
       })
-      console.log(response)
+        .then((willDelete) => {
+          if (willDelete) {
+            try {
+              const response = TaskHandler.deleteTask({ // Delete entry
+                id: i
+              })
+
+              console.log(response)
+
+              document.getElementById(i).remove() // Delete task from client's page
+            } catch (e) {
+              console.error(e)
+
+              swal('Unexpected error has occured', { // Error pop up
+                icon: 'error'
+              })
+            }
+
+            swal('Your file has been deleted!', { // Confirm pop up
+              icon: 'success'
+            })
+          } else {} // Return
+        })
     }
   }
 }
@@ -110,7 +131,7 @@ header > h2{
   word-wrap: break-word;
 }
 
-.addBut{
+.addButton{
   background-color: #03A9F4;
   position: absolute;
   right: 4%;
@@ -125,20 +146,17 @@ header > h2{
   text-align: center;
 }
 
-.deleteBut{
+.deleteButton{
   position: absolute;
   top: 0;
-  right:0;
-  background-color: #555555;
+  right: 0;
+  background-color: white;
   border: none;
-  color: #FFFFFF;
-  padding: 15px 32px;
-  text-align: center;
-  margin: 16px 0 !important;
-  text-decoration: none;
-  font-size: 16px;
+  width: 100px;
+  height: 100px;
+  font-size: 60px;
   cursor: pointer;
-  border-radius: 3px;
+  outline: none;
 }
 
 .but{

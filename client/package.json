@@ -16,6 +16,7 @@
   "dependencies": {
     "@mdi/js": "^5.3.45",
     "axios": "^0.19.2",
+    "sweetalert": "^2.1.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^2.2.33"
