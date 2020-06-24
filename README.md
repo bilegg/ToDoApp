@@ -13,4 +13,4 @@ npm start
 
 ```
 
-Server with hot-reloading is listening at http://localhost:8080/
+Server is listening at http://localhost:8080/
