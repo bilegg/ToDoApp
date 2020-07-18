@@ -31,8 +31,6 @@ body {
   margin: 0;
 }
 html {
-    height: 100%;
-    /*background: rgb(173,179,195);
-    background: linear-gradient(90deg, rgba(173,179,195,1) 0%, rgba(255,255,255,1) 37%);*/
+  height: 100%;
 }
 </style>

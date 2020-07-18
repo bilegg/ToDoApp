@@ -4,7 +4,7 @@
     </div>
     <header>
       <h2>
-      Add task
+      Edit task
       </h2>
     </header>
     <a style='text-decoration:none' href='http://localhost:8080'>
@@ -15,59 +15,28 @@
         </svg>
       </button>
     </a>
-    <input autoComplete="off" type='text' v-model='title' name='title' placeholder='Task title...'>
+    <input autoComplete="off" type='text' v-model='title' name='title'>
     <br><br>
-    <textarea name='description' v-model='description' rows='4' cols='50' placeholder='Task description...' maxlength = '100'></textarea>
+    <textarea name='description' v-model='description' rows='4' cols='50' maxlength = '100'></textarea>
     <br><br>
-    <button @click='addTask' class='addButton'>ADD</button>
+    <button @click='addTask' class='addButton'>SAVE</button>
   </div>
 </template>
 
 <script>
-import TaskHandler from '@/services/TaskHandler'
-import swal from 'sweetalert'
-
 export default {
+  name: 'EditTask',
   data () {
     return {
       title: '',
       description: ''
     }
   },
+  created () {
+    this.title = this.$route.params.title
+    this.description = this.$route.params.description
+  },
   methods: {
-    async addTask () {
-      switch (document.getElementsByName('title')[0].value) {
-        case '': // If title is empty
-          swal({ // Warning pop up
-            title: 'Cannot add new record',
-            text: 'The title is empty',
-            icon: 'warning'
-          })
-          break
-        default: // Else
-          try {
-            const response = await TaskHandler.addTask({ // Send request to write data
-              title: this.title,
-              description: this.description
-            })
-            console.log(response)
-
-            document.getElementsByName('title')[0].value = '' // Clear form
-            document.getElementsByName('description')[0].value = ''
-
-            swal('Task has been added!', { // Confirm pop up
-              icon: 'success'
-            })
-          } catch (e) {
-            console.error(e)
-
-            swal('Unexpected error has occured', { // Error pop up
-              icon: 'error'
-            })
-          }
-          break
-      }
-    }
   }
 }
 </script>

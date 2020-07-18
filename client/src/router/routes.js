@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AddTask from '@/components/AddTask'
 import TaskList from '@/components/TaskList'
+import EditTask from '@/components/EditTask'
 
 Vue.use(Router)
 
@@ -18,6 +19,16 @@ const router = new Router({
       name: 'AddTask',
       component: AddTask,
       meta: { title: 'Add Task' }
+    },
+    {
+      path: '/EditTask/:title&:description',
+      name: 'EditTask',
+      component: EditTask,
+      meta: { title: 'Edit Task' },
+      props: {
+        header: true,
+        content: true
+      }
     }
   ]
 })
