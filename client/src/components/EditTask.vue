@@ -19,13 +19,12 @@
     <br><br>
     <textarea name='description' v-model='description' rows='4' cols='50' maxlength = '100'></textarea>
     <br><br>
-    <button @click='addTask' class='addButton'>SAVE</button>
+    <button @click='editTask' class='addButton'>SAVE</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'EditTask',
   data () {
     return {
       title: '',
@@ -37,6 +36,9 @@ export default {
     this.description = this.$route.params.description
   },
   methods: {
+    editTask () {
+
+    }
   }
 }
 </script>
