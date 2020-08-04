@@ -1,24 +1,49 @@
 <template>
   <div>
-    <div class='topBar'>
-    </div>
+    <div class='topBar'></div>
     <header>
       <h2>
-      Add task
+        Add task
       </h2>
     </header>
     <a style='text-decoration:none' href='http://localhost:8080'>
       <button class='backButton'>
-        <svg class='bi bi-arrow-left' width='100px' height='100px' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
-          <path fill-rule='evenodd' d='M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z'/>
-          <path fill-rule='evenodd' d='M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/>
+        <svg
+          class='bi bi-arrow-left'
+          width='100px'
+          height='100px'
+          viewBox='0 0 16 16'
+          fill='currentColor'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            fill-rule='evenodd'
+            d='M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z'
+          />
+          <path
+            fill-rule='evenodd'
+            d='M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'
+          />
         </svg>
       </button>
     </a>
-    <input autoComplete="off" type='text' v-model='title' name='title' placeholder='Task title...'>
-    <br><br>
-    <textarea name='description' v-model='description' rows='4' cols='50' placeholder='Task description...' maxlength = '100'></textarea>
-    <br><br>
+    <input
+      autoComplete='off'
+      type='text'
+      v-model='title'
+      name='title'
+      placeholder='Task title...'
+    />
+    <br /><br />
+    <textarea
+      name='description'
+      v-model='description'
+      rows='4'
+      cols='50'
+      placeholder='Task description...'
+      maxlength='100'
+    ></textarea>
+    <br /><br />
     <button @click='addTask' class='addButton'>ADD</button>
   </div>
 </template>
@@ -38,15 +63,18 @@ export default {
     async addTask () {
       switch (document.getElementsByName('title')[0].value) {
         case '': // If title is empty
-          swal({ // Warning pop up
+          swal({
+            // Warning pop up
             title: 'Cannot add new record',
             text: 'The title is empty',
             icon: 'warning'
           })
           break
-        default: // Else
+        default:
+          // Else
           try {
-            const response = await TaskHandler.addTask({ // Send request to write data
+            const response = await TaskHandler.addTask({
+              // Send request to write data
               title: this.title,
               description: this.description
             })
@@ -55,13 +83,15 @@ export default {
             document.getElementsByName('title')[0].value = '' // Clear form
             document.getElementsByName('description')[0].value = ''
 
-            swal('Task has been added!', { // Confirm pop up
+            // Confirm pop up
+            swal('Task has been added!', {
               icon: 'success'
             })
           } catch (e) {
             console.error(e)
 
-            swal('Unexpected error has occured', { // Error pop up
+            // Error pop up
+            swal('Unexpected error has occured', {
               icon: 'error'
             })
           }
@@ -73,8 +103,8 @@ export default {
 </script>
 
 <style scoped>
-header{
-  background-color: #03A9F4;
+header {
+  background-color: #03a9f4;
   height: 100px;
   position: relative;
   box-shadow: 0px 10px 5px #27272780;
@@ -82,7 +112,7 @@ header{
   -moz-box-shadow: 0px 10px 5px #27272780;
 }
 
-header > h2{
+header > h2 {
   margin: 0;
   position: absolute;
   top: 50%;
@@ -93,14 +123,14 @@ header > h2{
   font-size: 60px;
 }
 
-.topBar{
-  background-color: #0288D1;
+.topBar {
+  background-color: #0288d1;
   width: 100%;
   height: 20px;
 }
 
-.backButton{
-  background-color: #03A9F4;
+.backButton {
+  background-color: #03a9f4;
   position: absolute;
   right: 4%;
   top: 20px;
@@ -114,7 +144,7 @@ header > h2{
   text-align: center;
 }
 
-input{
+input {
   width: 35%;
   margin: 60px 0;
   display: inline-block;
@@ -132,7 +162,7 @@ input{
   height: 50px;
 }
 
-textarea{
+textarea {
   width: 40%;
   height: 130px;
   padding: 12px 20px;
@@ -144,10 +174,10 @@ textarea{
   font-size: 25px;
 }
 
-.addButton{
+.addButton {
   background-color: #555555;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 15px 32px;
   text-align: center;
   margin: 16px 0;
@@ -158,6 +188,5 @@ textarea{
   font-size: 20px;
   font-weight: bold;
 }
-
 </style>
 <!-- Add 'scoped' attribute to limit CSS to this component only -->

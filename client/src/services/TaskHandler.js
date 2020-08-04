@@ -6,5 +6,8 @@ export default{
   },
   deleteTask (task) {
     return Api().post('deleteTask', task)
+  },
+  updateTask (task) {
+    return Api().post('updateTask', task)
   }
 }

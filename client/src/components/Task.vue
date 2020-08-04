@@ -9,7 +9,10 @@
     <router-link
       class="clickIcon"
       style="right: 100px"
-      :to="{ name: 'EditTask', params: { title: task.title, description: task.description }}"
+      :to="{
+        name: 'EditTask',
+        params: { title: task.title, description: task.description }
+      }"
     >
       <svg
         style="display: block; margin: auto"
@@ -66,34 +69,32 @@ export default {
     }
   },
   methods: {
-    async deleteTask (i) {
+    deleteTask (i) {
       swal({
         text: 'Are you sure?',
         icon: 'warning',
         buttons: ['Not really', 'Yes I am!'],
-        dangerMode: true
+        dangerMode: true,
+        closeModal: false
       }).then(willDelete => {
         if (willDelete) {
-          try {
-            const response = TaskHandler.deleteTask({
-              // Delete entry
-              id: i
-            })
-
-            console.log(response)
-
-            this.$emit('delete-task', this.task.id) // Emit signal to delete task
-          } catch (e) {
-            console.error(e)
-
+          const response = TaskHandler.deleteTask({
+            // Delete entry
+            id: i
+          }).catch((error) => {
             swal('Unexpected error has occured', {
               // Error pop up
               icon: 'error'
             })
-          }
 
+            throw (error)
+          })
+          console.log(response)
+
+          this.$emit('delete-task', this.task.id) // Emit signal to delete task
+
+          // Confirm pop up
           swal('Your file has been deleted!', {
-            // Confirm pop up
             icon: 'success'
           })
         } else {
@@ -125,9 +126,9 @@ header > h2 {
   font-size: 60px;
 }
 
-.mainContainer{
+.mainContainer {
   text-align: left;
-  width:40%;
+  width: 40%;
   margin-left: 30%;
   position: relative;
 }

@@ -36,4 +36,14 @@ module.exports = {
             })
         }
     },
+    async updateTask (req, res) {   
+        try{
+            const task = await Task.create(req.body)
+            task.save()
+        } catch (err) {
+            res.status(400).send({
+                error: 'Unexpected error had occured'
+            })
+        }
+    },
 }

@@ -4,7 +4,7 @@ module.exports = (app) => {
     app.get('/getData', 
         TaskController.main),
     app.post('/AddTask', 
-        TaskController.addTask)
+        TaskController.addTask),
     app.post('/DeleteTask', 
         TaskController.deleteTask)
 }
