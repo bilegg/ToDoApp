@@ -1,10 +1,8 @@
-const TaskController = require('./controllers/TaskController')
+const TaskController = require("./controllers/TaskController");
 
 module.exports = (app) => {
-    app.get('/getData', 
-        TaskController.main),
-    app.post('/AddTask', 
-        TaskController.addTask),
-    app.post('/DeleteTask', 
-        TaskController.deleteTask)
-}
+  app.get("/getData", TaskController.main),
+    app.post("/AddTask", TaskController.addTask),
+    app.post("/DeleteTask", TaskController.deleteTask),
+    app.post("/UpdateTask", TaskController.updateTask);
+};

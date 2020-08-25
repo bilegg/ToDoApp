@@ -10,7 +10,7 @@
       class="clickIcon"
       style="right: 100px"
       :to="{
-        name: 'EditTask',
+        name: 'UpdateTask',
         params: { title: task.title, description: task.description }
       }"
     >
@@ -69,7 +69,7 @@ export default {
     }
   },
   methods: {
-    deleteTask (i) {
+    deleteTask(i) {
       swal({
         text: 'Are you sure?',
         icon: 'warning',
@@ -79,15 +79,14 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           const response = TaskHandler.deleteTask({
-            // Delete entry
-            id: i
-          }).catch((error) => {
+            id: i // Delete entry
+          }).catch(err => {
             swal('Unexpected error has occured', {
               // Error pop up
               icon: 'error'
             })
 
-            throw (error)
+            console.error(err)
           })
           console.log(response)
 
@@ -121,7 +120,7 @@ header > h2 {
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  font-family: "MuseoModerno", cursive;
+  font-family: 'MuseoModerno', cursive;
   transform: translate(-50%, -50%);
   font-size: 60px;
 }

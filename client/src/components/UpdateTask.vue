@@ -2,9 +2,7 @@
   <div>
     <div class="topBar"></div>
     <header>
-      <h2>
-        Add task
-      </h2>
+      <h2>Edit task</h2>
     </header>
     <a style="text-decoration:none" href="http://localhost:8080">
       <button class="backButton">
@@ -27,24 +25,19 @@
         </svg>
       </button>
     </a>
-    <input
-      autoComplete="off"
-      type="text"
-      v-model="title"
-      name="title"
-      placeholder="Task title..."
-    />
-    <br /><br />
+    <input autocomplete="off" type="text" v-model="title" name="title" />
+    <br />
+    <br />
     <textarea
       name="description"
       v-model="description"
       rows="4"
       cols="50"
-      placeholder="Task description..."
       maxlength="100"
     ></textarea>
-    <br /><br />
-    <button @click="addTask" class="addButton">ADD</button>
+    <br />
+    <br />
+    <button @click="updateTask" class="addButton">SAVE</button>
   </div>
 </template>
 
@@ -59,46 +52,37 @@ export default {
       description: ''
     }
   },
+  created() {
+    this.title = this.$route.params.title
+    this.description = this.$route.params.description
+  },
   methods: {
-    async addTask() {
-      switch (document.getElementsByName('title')[0].value) {
-        case '': // If title is empty
-          swal({
-            // Warning pop up
-            title: 'Cannot add new record',
-            text: 'The title is empty',
-            icon: 'warning'
-          })
-          break
-        default:
-          // Else
-          try {
-            const response = await TaskHandler.addTask({
-              // Send request to write data
-              title: this.title,
-              description: this.description
-            }).catch(err => {
-              console.log(err)
-            })
+    updateTask() {
+      try {
+        const response = TaskHandler.updateTask({
+          // Send request to write data
+          oldData: {
+            title: this.$route.params.title,
+            description: this.$route.params.description
+          },
+          newData: { title: this.title, description: this.description }
+        }).catch(err => {
+          console.log(err)
+        })
 
-            console.log(response)
+        console.log(response)
 
-            document.getElementsByName('title')[0].value = '' // Clear form
-            document.getElementsByName('description')[0].value = ''
+        // Confirm pop up
+        swal('Task has been updated!', {
+          icon: 'success'
+        })
+      } catch (err) {
+        console.error(err)
 
-            // Confirm pop up
-            swal('Task has been added!', {
-              icon: 'success'
-            })
-          } catch (e) {
-            console.error(e)
-
-            // Error pop up
-            swal('Unexpected error has occured', {
-              icon: 'error'
-            })
-          }
-          break
+        // Error pop up
+        swal('Unexpected error has occured', {
+          icon: 'error'
+        })
       }
     }
   }
